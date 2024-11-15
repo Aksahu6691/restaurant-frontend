@@ -1,6 +1,6 @@
-import BgImg from "./BgImg"
-import BgRings from "./BgRings"
-import Navbar from "./Navbar"
+import BgImg from "./BgImg";
+import BgRings from "./BgRings";
+import Navbar from "./Navbar";
 
 function Home() {
     return (
