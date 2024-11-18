@@ -1,14 +1,34 @@
+import { useState } from "react";
+import RegistrationModal from "../user/RegistrationModal";
 import BgImg from "./BgImg";
 import BgRings from "./BgRings";
 import Navbar from "./Navbar";
+import LoginModal from "../user/LoginModal";
+import Cookies from 'js-cookie';
 
 function Home() {
+    const userName = Cookies.get('userName');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalType, setModalType] = useState<'register' | 'login'>('register');
+
+    const handleOpenModal = (type: 'register' | 'login') => {
+        setModalType(type);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
     return (
         <section className="relative py-8 px-5 md:px-[12%] min-h-screen bg-[#fff]">
 
             {/* Navigation Bar */}
-            <Navbar />
+            <Navbar onOpen={handleOpenModal} />
 
+            {isModalOpen && modalType === 'register' && <RegistrationModal onClose={handleCloseModal} />}
+            {isModalOpen && modalType === 'login' && <LoginModal onClose={handleCloseModal} />}
+
+            {userName && <div className="absolute left-[40%] top-[20%] font-bold text-3xl">Welcome: {userName}</div>}
             {/* Background designs */}
             <BgRings />
 
