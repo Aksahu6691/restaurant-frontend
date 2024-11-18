@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import DishCard from "./DishCard";
-import axios from "axios";
-import staticData from "../../config/staticData";
+import useDishApi from "../../hooks/apis/useDishApi";
 
 interface Dish {
     _id: string;
@@ -12,12 +11,14 @@ interface Dish {
 
 function Dishes() {
     const [dishes, setDiseh] = useState<Dish[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
+    const { getAllDishes } = useDishApi();
 
     const fetchDishes = async () => {
+        setLoading(true);
         try {
-            const response = await axios.get<Dish[]>(`${staticData.apiUrl}/api/dish/get`);
-            setDiseh(response.data);
+            const res = await getAllDishes();
+            setDiseh(res.response as Dish[]);
         } catch (error) {
             console.error(error);
         } finally {

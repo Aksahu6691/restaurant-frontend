@@ -2,8 +2,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import TestimonialCard from "./TestimonialCard";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import staticData from "../../config/staticData";
+import useTestimonialApi from "../../hooks/apis/useTestimonialApi";
 
 function Testimonial() {
     interface MyTestimonial {
@@ -16,12 +15,13 @@ function Testimonial() {
 
     const [testimonialList, setTestimonialList] = useState<MyTestimonial[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const { getAllTestimonials } = useTestimonialApi();
 
     const getTestimonialList = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`${staticData.apiUrl}/api/testimonial/get`);
-            setTestimonialList(response.data);
+            const res = await getAllTestimonials();
+            setTestimonialList(res.response as MyTestimonial[]);
         } catch (error) {
             console.error(error);
         } finally {

@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import Cookies from 'js-cookie';
-import staticData from '../../config/staticData';
+import useUserApi from '../../hooks/apis/useUserApi';
 
 interface LoginModalProps {
     onClose: () => void;
 }
+
+interface LoginResponse {
+    response: {
+        message: string;
+        token: string;
+        user: {
+            email: string;
+            id: string;
+            name: string;
+        };
+    };
+    errorMsg: string;
+    success: boolean;
+}
+
+
 
 const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [formErrors, setFormErrors] = useState<{ email?: string; password?: string }>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const { loginUser } = useUserApi();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -38,11 +54,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
         if (validateForm()) {
             setIsSubmitting(true);
             try {
-                const response = await axios.post(`${staticData.apiUrl}/api/user/login`, { email, password });
-                alert(response.data.message);
+                const res = (await loginUser({ email, password })) as LoginResponse;
 
-                Cookies.set('authToken', response.data.token, { expires: 1 });
-                Cookies.set('userName', response.data.user.name);
+                alert(res.response.message);
+
+                Cookies.set('authToken', res.response.token, { expires: 1 });
+                Cookies.set('userName', res.response.user.name);
 
                 onClose();
             } catch (error) {

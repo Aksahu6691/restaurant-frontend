@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import staticData from '../../config/staticData';
+import useUserApi from '../../hooks/apis/useUserApi';
 
 interface FormValues {
     name: string;
@@ -25,6 +24,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ onClose }) => {
 
     const [formErrors, setFormErrors] = useState<Partial<FormValues>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const { addUserDetail } = useUserApi();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -65,7 +65,7 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ onClose }) => {
         if (validateForm()) {
             setIsSubmitting(true);
             try {
-                await axios.post(`${staticData.apiUrl}/api/user/add`, formValues);
+                await addUserDetail(formValues);
                 alert('User registered successfully!');
                 setFormValues({
                     name: '',

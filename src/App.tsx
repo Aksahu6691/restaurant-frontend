@@ -1,12 +1,12 @@
-import { Route, Routes } from "react-router-dom"
-import Index from "./pages/Index"
+import { HttpMethodContextProvider } from "./context/HttpMethodProvider";
+import Routes from "./Routes";
 
 function App() {
 
   return (
-    <Routes>
-      <Route path="/" element={<Index />} />
-    </Routes>
+    <HttpMethodContextProvider>
+      <Routes />
+    </HttpMethodContextProvider>
   )
 }
 
