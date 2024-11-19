@@ -1,7 +1,6 @@
-import axios from 'axios';
 import React, { createContext, useCallback, useContext, useState } from 'react';
 import { ApiResponseData } from '../types/api';
-import envConfig from '../config/env.config';
+import AxiosService from './AxiosService';
 
 interface HttpMethodContextType {
     showApiLoader: boolean;
@@ -28,10 +27,6 @@ interface HttpMethodContextType {
 export const HttpMethodContext = createContext<
     HttpMethodContextType | undefined
 >(undefined);
-
-const AxiosService = axios.create({
-    baseURL: envConfig.API_URL
-});
 
 const createApiErrorResponse = (error: unknown): ApiResponseData => {
     let errorMsg = 'Something went wrong';

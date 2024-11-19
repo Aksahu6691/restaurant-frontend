@@ -7,6 +7,7 @@ interface NavbarProps {
 
 function Navbar({ onOpen }: NavbarProps) {
     const token = Cookies.get('authToken');
+    console.log("token: " + token);
 
     const logout = () => {
         Cookies.remove('authToken');

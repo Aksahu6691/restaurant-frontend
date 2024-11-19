@@ -7,6 +7,8 @@ interface LoginModalProps {
 }
 
 interface LoginResponse {
+    success: boolean;
+    errorMsg: string;
     response: {
         message: string;
         token: string;
@@ -16,8 +18,6 @@ interface LoginResponse {
             name: string;
         };
     };
-    errorMsg: string;
-    success: boolean;
 }
 
 
