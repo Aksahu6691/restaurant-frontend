@@ -3,6 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 import TestimonialCard from "./TestimonialCard";
 import { useEffect, useState } from "react";
 import useTestimonialApi from "../../hooks/apis/useTestimonialApi";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Testimonial() {
     interface MyTestimonial {
@@ -13,6 +14,7 @@ function Testimonial() {
         designation: string;
     }
 
+    const { isAuthenticated } = useAuth0();
     const [testimonialList, setTestimonialList] = useState<MyTestimonial[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const { getAllTestimonials } = useTestimonialApi();
@@ -30,7 +32,7 @@ function Testimonial() {
     }
 
     useEffect(() => {
-        getTestimonialList();
+        isAuthenticated && getTestimonialList();
     }, []);
 
     const responsive = {

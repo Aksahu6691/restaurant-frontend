@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DishCard from "./DishCard";
 import useDishApi from "../../hooks/apis/useDishApi";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface Dish {
     _id: string;
@@ -10,6 +11,7 @@ interface Dish {
 }
 
 function Dishes() {
+    const { isAuthenticated } = useAuth0();
     const [dishes, setDiseh] = useState<Dish[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const { getAllDishes } = useDishApi();
@@ -27,7 +29,7 @@ function Dishes() {
     };
 
     useEffect(() => {
-        fetchDishes();
+        isAuthenticated && fetchDishes();
     }, []);
 
     return (
