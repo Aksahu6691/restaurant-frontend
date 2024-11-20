@@ -42,7 +42,7 @@ function Dishes() {
             <div className="font-bold text-5xl py-4">Our Special Dishes</div>
             <div className="text-[#5C6574]">Lorem ipsum dolor sit amet, consectetur <br /> adipiscing elit, sed do eiusmod tempor incididunt</div>
 
-            <div className="flex justify-between my-20 gap-4 flex-wrap">
+            <div className="flex justify-center md:justify-between my-20 gap-4 flex-wrap">
                 {loading ? <div className="font-bold text-xl">Loading...</div> :
                     dishes.length ? dishes.map((dish) => (
                         <DishCard key={dish._id} image={dish.image} name={dish.name} description={dish.description} />
@@ -52,7 +52,7 @@ function Dishes() {
             <div className="flex flex-row flex-wrap justify-between items-center my-20">
                 <img className="w-full lg:w-[45%]" src="img/dish.png" alt="error" />
 
-                <div className="w-full lg:w-[50%] text-start py-14 px-20">
+                <div className="w-full lg:w-[50%] text-start py-14 px-2 lg:px-20">
                     <div className="font-bold text-5xl mb-10">Wecome to Our <br /> Restaurant</div>
                     <div className="my-8 text-[#5C6574]">Lorem ipsum dolor sit amet, consectetur <br /> adipiscing elit, sed do eiusmod tempor incididunt <br /> ut labore et dolore magna aliqua.</div>
                     <div className="flex flex-row gap-6">

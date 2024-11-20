@@ -1,6 +1,25 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import useSubscribeApi from "./useSubscribeApi";
 
 function Footer() {
+    const { subscribeUser } = useSubscribeApi();
+    const [email, setEmail] = useState<string>("");
+
+    const Subscribing = async () => {
+        try {
+            if (!email) {
+                alert("Please enter your email address");
+                return;
+            }
+            await subscribeUser({ email });
+            alert("Email Subscribe Successfully");
+            setEmail("");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <section className="relative pt-10 px-5 md:px-[12%] min-h-fit bg-[#fff]">
 
@@ -8,8 +27,8 @@ function Footer() {
             <div className="absolute top-[-150px] bg-orange-300 bg-[url('img/footer-mask-group.png')] w-[95%] md:w-[80%] h-[350px] rounded-lg flex flex-col justify-evenly text-center">
                 <h1 className="text-4xl text-[#FFF] font-bold">Get Or Promo Code by <br /> Subscribing To our Newsletter</h1>
                 <div className="relative">
-                    <input type="text" className="h-12 w-[45%] p-3 rounded-lg" placeholder="Enter your Email" />
-                    <button type="button" className="absolute right-[28%] top-1 rounded bg-[#EA6D27] p-2 w-[10%]">Send</button>
+                    <input type="text" onChange={(e) => setEmail(e.target.value)} className="h-12 w-[45%] p-3 rounded-lg" placeholder="Enter your Email" />
+                    <button onClick={Subscribing} type="button" className="absolute right-[28%] top-1 rounded bg-[#EA6D27] p-2 w-[10%]">Send</button>
                 </div>
             </div>
 

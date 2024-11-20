@@ -42,7 +42,7 @@ function Navbar({ onOpen }: NavbarProps) {
                     </>
                 } */}
             </div>
-            <button type="button" className="p-3 w-full md:w-[12%] text-center bg-[#EA6D27] text-white font-bold rounded-tl-xl rounded-br-xl">Book a table</button>
+            <button type="button" className="p-3 w-full hidden md:block md:w-[12%] text-center bg-[#EA6D27] text-white font-bold rounded-tl-xl rounded-br-xl">Book a table</button>
         </nav>
     )
 }
