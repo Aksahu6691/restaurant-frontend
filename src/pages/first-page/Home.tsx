@@ -10,6 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 function Home() {
     const { user, isAuthenticated } = useAuth0();
     const userName = Cookies.get('userName');
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalType, setModalType] = useState<'register' | 'login'>('register');
 
@@ -30,8 +31,8 @@ function Home() {
             {isModalOpen && modalType === 'register' && <RegistrationModal onClose={handleCloseModal} />}
             {isModalOpen && modalType === 'login' && <LoginModal onClose={handleCloseModal} />}
 
-            {userName && <div className="absolute left-[40%] top-[20%] font-bold text-3xl">Welcome: {userName}</div>}
-            {isAuthenticated && <div className="absolute left-[40%] top-[20%] font-bold text-3xl">Welcome: {user?.name}</div>}
+            {/* {userName && <div className="absolute left-[40%] top-[20%] font-bold text-3xl">Welcome Cookiey: {userName}</div>} */}
+            {(isAuthenticated || userName) && <div className="absolute left-[40%] top-[16%] font-bold text-3xl">Welcome: {user?.name || userName}</div>}
             {/* Background designs */}
             <BgRings />
 

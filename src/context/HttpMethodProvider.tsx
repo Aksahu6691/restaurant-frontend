@@ -47,6 +47,7 @@ export const HttpMethodContextProvider: React.FC<{
 
     AxiosService.defaults.headers.common.Accept = 'application/json';
     AxiosService.defaults.headers.common['Content-Type'] = 'application/json';
+    // AxiosService.defaults.headers.common['Authorization'] = `Bearer ${token}`,
 
     const get = useCallback(
         async (endpoint: string, showLoader = true): Promise<ApiResponseData> => {

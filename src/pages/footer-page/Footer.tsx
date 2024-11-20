@@ -15,8 +15,11 @@ function Footer() {
             await subscribeUser({ email });
             alert("Email Subscribe Successfully");
             setEmail("");
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
+            console.log(error.message);
+            console.log(error.response.data.message);
+            alert("Error: " + error.message);
         }
     }
 

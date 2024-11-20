@@ -1,21 +1,29 @@
 import { Link } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
 
 interface NavbarProps {
     onOpen: (type: 'register' | 'login') => void;
 }
 
 function Navbar({ onOpen }: NavbarProps) {
-    const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+    const token = Cookies.get('authToken');
+    const { loginWithRedirect, logout, isAuthenticated, getAccessTokenSilently, user } = useAuth0();
+
+    useEffect(() => {
+        isAuthenticated && getAccessTokenSilently().then((token) => {
+            Cookies.set('authToken', token, { expires: 1 });
+            Cookies.set('userName', user?.name!);
+        }).catch((err) => { console.log(err); });
+    }, [isAuthenticated]);
 
     // It is manually login and logout code
-    // const token = Cookies.get('authToken');
-    // const logout = () => {
-    //     Cookies.remove('authToken');
-    //     Cookies.remove('userName');
-    //     window.location.reload();
-    // }
+    const removeCookiey = () => {
+        Cookies.remove('authToken');
+        Cookies.remove('userName');
+        logout({ logoutParams: { returnTo: window.location.origin } });
+    }
 
     return (
         <nav className="flex flex-row flex-wrap gap-4 justify-between align-middle">
@@ -27,8 +35,8 @@ function Navbar({ onOpen }: NavbarProps) {
                 <Link to={"#"} className="hover:font-bold hover:text-blue-500 duration-300">Contact</Link>
 
                 {/* Use Auth0 for login and logout */}
-                {isAuthenticated ? (
-                    <Link to={"#"} className="hover:font-bold hover:text-blue-500 duration-300" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout</Link>
+                {token || isAuthenticated ? (
+                    <Link to={"#"} className="hover:font-bold hover:text-blue-500 duration-300" onClick={() => removeCookiey()}>Logout</Link>
                 ) : (
                     <Link to={"#"} className="hover:font-bold hover:text-blue-500 duration-300" onClick={() => loginWithRedirect()}>Login</Link>
                 )}

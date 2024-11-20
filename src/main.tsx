@@ -12,6 +12,8 @@ createRoot(document.getElementById('root')!).render(
       redirect_uri: window.location.origin
     }}
   >
+    {/* <StrictMode> */}
     <App />
+    {/* </StrictMode> */}
   </Auth0Provider>,
 )
