@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/store";
+import { resetRedux, updateStaffName } from "../../redux/userSlice";
 
 interface NavbarProps {
     onOpen: (type: 'register' | 'login') => void;
@@ -9,12 +12,23 @@ interface NavbarProps {
 
 function Navbar({ onOpen }: NavbarProps) {
     const token = Cookies.get('authToken');
+    const dispatch = useDispatch<AppDispatch>();
+    const reduxUser = useSelector((state: RootState) => state.user);
     const { loginWithRedirect, logout, isAuthenticated, getAccessTokenSilently, user } = useAuth0();
+
+    console.log(reduxUser.name);
 
     useEffect(() => {
         isAuthenticated && !token && getAccessTokenSilently().then((token) => {
+
+            // Set cookies
             Cookies.set('authToken', token, { expires: 1 });
             Cookies.set('userName', user?.name!);
+
+            // Set redux
+            dispatch(updateStaffName(user?.name!));
+
+            // after that reload entire page
             window.location.reload();
         }).catch((err) => { console.log("error running"); console.log(err); });
     }, [isAuthenticated]);
@@ -23,6 +37,7 @@ function Navbar({ onOpen }: NavbarProps) {
     const removeCookiey = () => {
         Cookies.remove('authToken');
         Cookies.remove('userName');
+        dispatch(resetRedux());
         logout({ logoutParams: { returnTo: window.location.origin } });
     }
 
