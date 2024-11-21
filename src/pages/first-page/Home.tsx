@@ -31,7 +31,8 @@ function Home() {
             {isModalOpen && modalType === 'register' && <RegistrationModal onClose={handleCloseModal} />}
             {isModalOpen && modalType === 'login' && <LoginModal onClose={handleCloseModal} />}
 
-            {/* {userName && <div className="absolute left-[40%] top-[20%] font-bold text-3xl">Welcome Cookiey: {userName}</div>} */}
+            {/* {userName && <div className="absolute left-[40%] top-[20%] font-bold text-3xl">Welcome Cookiey: {userName}</div>}
+            {isAuthenticated && <div className="absolute left-[40%] top-[14%] font-bold text-3xl">Welcome Auth0: {user?.name}</div>} */}
             {(isAuthenticated || userName) && <div className="absolute left-[40%] top-[16%] font-bold text-3xl">Welcome: {user?.name || userName}</div>}
             {/* Background designs */}
             <BgRings />

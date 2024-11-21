@@ -12,10 +12,11 @@ function Navbar({ onOpen }: NavbarProps) {
     const { loginWithRedirect, logout, isAuthenticated, getAccessTokenSilently, user } = useAuth0();
 
     useEffect(() => {
-        isAuthenticated && getAccessTokenSilently().then((token) => {
+        isAuthenticated && !token && getAccessTokenSilently().then((token) => {
             Cookies.set('authToken', token, { expires: 1 });
             Cookies.set('userName', user?.name!);
-        }).catch((err) => { console.log(err); });
+            window.location.reload();
+        }).catch((err) => { console.log("error running"); console.log(err); });
     }, [isAuthenticated]);
 
     // It is manually login and logout code
