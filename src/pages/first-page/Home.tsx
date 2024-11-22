@@ -4,12 +4,13 @@ import BgImg from "./BgImg";
 import BgRings from "./BgRings";
 import Navbar from "./Navbar";
 import LoginModal from "../user/LoginModal";
-import Cookies from 'js-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 function Home() {
     const { user, isAuthenticated } = useAuth0();
-    const userName = Cookies.get('userName');
+    const reduxUser = useSelector((state: RootState) => state.user);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalType, setModalType] = useState<'register' | 'login'>('register');
@@ -33,7 +34,7 @@ function Home() {
 
             {/* {userName && <div className="absolute left-[40%] top-[20%] font-bold text-3xl">Welcome Cookiey: {userName}</div>}
             {isAuthenticated && <div className="absolute left-[40%] top-[14%] font-bold text-3xl">Welcome Auth0: {user?.name}</div>} */}
-            {(isAuthenticated || userName) && <div className="absolute left-[40%] top-[16%] font-bold text-3xl">Welcome: {user?.name || userName}</div>}
+            {(isAuthenticated || reduxUser.name) && <div className="absolute left-[40%] top-[16%] font-bold text-3xl">Welcome: {user?.name || reduxUser.name}</div>}
             {/* Background designs */}
             <BgRings />
 

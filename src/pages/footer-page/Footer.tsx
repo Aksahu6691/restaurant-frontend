@@ -27,7 +27,7 @@ function Footer() {
         <section className="relative pt-10 px-5 md:px-[12%] min-h-fit bg-[#fff]">
 
             {/* Subscription section */}
-            <div className="absolute top-[-150px] bg-orange-300 bg-[url('img/footer-mask-group.png')] w-[95%] md:w-[80%] h-[350px] rounded-lg flex flex-col justify-evenly text-center">
+            <div className="absolute top-[-150px] bg-[url('img/footer-mask-group.png')] bg-cover w-[95%] md:w-[80%] h-[350px] flex flex-col justify-evenly text-center">
                 <h1 className="text-4xl text-[#FFF] font-bold">Get Or Promo Code by <br /> Subscribing To our Newsletter</h1>
                 <div className="relative">
                     <input type="text" onChange={(e) => setEmail(e.target.value)} className="h-12 w-[45%] p-3 rounded-lg" placeholder="Enter your Email" />

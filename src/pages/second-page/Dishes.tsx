@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import DishCard from "./DishCard";
 import useDishApi from "../../hooks/apis/useDishApi";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../../redux/store";
 
 interface Dish {
     _id: string;
@@ -10,6 +12,7 @@ interface Dish {
 }
 
 function Dishes() {
+    // const reduxUser = useSelector((state: RootState) => state.user);
     const [dishes, setDiseh] = useState<Dish[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const { getAllDishes } = useDishApi();
